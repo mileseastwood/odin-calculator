@@ -8,6 +8,7 @@ let decimal = false;
 let operator = null;
 let waiting = false;
 let decimalPlace = -1;
+let dbz = false;
 
 buttons.forEach((b) => {
   if (b.classList.contains("number")) b.addEventListener("click", addNumber);
@@ -63,6 +64,7 @@ function addOperator(e) {
       if (!operator) break;
       storedVal = operate();
       updateScreen(storedVal);
+      waiting = true;
       break;
     }
     default: {
@@ -75,7 +77,6 @@ function addOperator(e) {
         storedVal = inputVal;
       }
       operator = id;
-      //updateScreen(storedVal);
       clearInput(storedVal);
       inputVal = 0;
 
@@ -94,7 +95,8 @@ function operate() {
       return storedVal * inputVal;
     case "divide": {
       if (inputVal == 0) {
-        return "Cannot divide by Zero!";
+        dbz = true;
+        return storedVal;
       }
       return storedVal / inputVal;
     }
@@ -105,6 +107,13 @@ function operate() {
 
 function updateScreen(num) {
   let fontSize = "72px";
+
+  if (dbz) {
+    output.setAttribute("style", `font-size: 40px`);
+    output.textContent = "Cannot divide by zero";
+    dbz = false;
+    return;
+  }
 
   if (num > 999999) num = num.toExponential(2);
 
