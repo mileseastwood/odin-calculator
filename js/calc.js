@@ -9,6 +9,7 @@ let operator = null;
 let waiting = false;
 let decimalPlace = -1;
 let dbz = false;
+let neg = false;
 
 buttons.forEach((b) => {
   if (b.classList.contains("number")) b.addEventListener("click", addNumber);
@@ -25,6 +26,9 @@ function addNumber(e) {
       decimal = true;
     }
   } else {
+    if (neg) {
+      inputVal *= -1;
+    }
     if (decimal) {
       inputVal = inputVal + n * 10 ** decimalPlace;
       decimalPlace -= 1;
@@ -32,6 +36,9 @@ function addNumber(e) {
       inputVal = inputVal * 10 + n;
     }
     if (waiting) waiting = false;
+    if (neg) {
+      inputVal *= -1;
+    }
   }
 
   updateScreen(inputVal);
@@ -45,6 +52,7 @@ function addModifier(e) {
       break;
     }
     case "negative": {
+      neg = neg ? false : true;
       inputVal *= -1;
       break;
     }
@@ -140,6 +148,7 @@ function clearInput(val) {
   inputVal = 0;
   decimal = false;
   waiting = false;
+  neg = false;
   decimalPlace = -1;
   updateScreen(val);
 }
@@ -150,6 +159,7 @@ function clearAll() {
   storedVal = null;
   decimal = false;
   waiting = false;
+  neg = false;
   decimalPlace = -1;
   updateScreen(0);
 }
@@ -184,10 +194,15 @@ function strToInt(n) {
 }
 function startTime() {
   const today = new Date();
-  let h = today.getHours() % 12;
+  let h = today.getHours();
+  let s = "AM";
+  if (h >= 12) {
+    h = h % 12;
+    s = "PM";
+  }
   let m = today.getMinutes();
   m = m < 10 ? "0" + m : m;
-  clock.textContent = h + ":" + m;
+  clock.textContent = h + ":" + m + " " + s;
   setTimeout(startTime, 1000);
 }
 

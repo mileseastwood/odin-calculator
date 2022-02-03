@@ -48,6 +48,26 @@ body {
   gap: 10px;
 }
 
+.signalBars,
+.wifi {
+  height: 18px;
+  width: auto;
+}
+
+.battery {
+  height: 30px;
+  width: auto;
+  margin-left: auto;
+}
+
+.wifi {
+  margin-right: auto;
+}
+
+.carrier {
+  margin: 0 5px;
+}
+
 .camera {
   height: 10px;
   width: 10px;
@@ -88,10 +108,15 @@ body {
 .infoBar {
   height: 20px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   color: white;
   font-size: 12px;
+  font-weight: 500;
+}
+
+.clock {
+  margin-right: 50px;
 }
 
 .calc {
